@@ -287,6 +287,7 @@ export default {
       })
     },
     updateHandle () {
+      if (!this.$refs.nav || !this.$refs.navScroll) return;
       const navWidth = this.$refs.nav.offsetWidth
       const containerWidth = this.$refs.navScroll.offsetWidth
       const currentOffset = this.getCurrentScrollOffset()

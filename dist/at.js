@@ -7103,6 +7103,7 @@ exports.default = {
       });
     },
     updateHandle: function updateHandle() {
+      if (!this.$refs.nav || !this.$refs.navScroll) return;
       var navWidth = this.$refs.nav.offsetWidth;
       var containerWidth = this.$refs.navScroll.offsetWidth;
       var currentOffset = this.getCurrentScrollOffset();
