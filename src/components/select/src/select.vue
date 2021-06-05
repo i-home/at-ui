@@ -21,7 +21,7 @@
         <i class="icon icon-x at-tag__close" @click.stop="removeTag(index)"></i>
       </span>
       <span class="at-select__placeholder" v-show="showPlaceholder && !filterable">{{ localePlaceholder }}</span>
-      <span class="at-select__selected" v-show="!showPlaceholder && !multiple && !filterable">{{ selectedSingle }}</span>
+      <span class="at-select__selected" v-show="!showPlaceholder && !multiple && !filterable" v-html="selectedSingle">/span>
       <input
         type="text"
         class="at-select__input"
