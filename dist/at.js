@@ -4158,7 +4158,10 @@ exports.default = {
       type: Boolean,
       default: false
     },
-    click: click
+    click: {
+      type: Function,
+      default: undefined
+    }
   },
   data: function data() {
     return {

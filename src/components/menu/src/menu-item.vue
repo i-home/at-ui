@@ -39,7 +39,10 @@
         type: Boolean,
         default: false
       },
-      click
+      click: {
+        type: Function,
+        default: undefined
+      }
     },
     data () {
       return {
