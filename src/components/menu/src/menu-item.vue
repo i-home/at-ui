@@ -38,7 +38,8 @@
       disabled: {
         type: Boolean,
         default: false
-      }
+      },
+      click
     },
     data () {
       return {
@@ -47,6 +48,10 @@
     },
     methods: {
       handleClick (evt) {
+        if (this.click) {
+          this.click.apply(this, evt);
+          return
+        }
         evt.preventDefault()
         if (this.disabled) return
         const parents = findComponentsUpward(this, 'AtSubmenu')

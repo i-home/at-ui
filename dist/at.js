@@ -4157,7 +4157,8 @@ exports.default = {
     disabled: {
       type: Boolean,
       default: false
-    }
+    },
+    click: click
   },
   data: function data() {
     return {
@@ -4169,6 +4170,10 @@ exports.default = {
     handleClick: function handleClick(evt) {
       var _this = this;
 
+      if (this.click) {
+        this.click.apply(this, evt);
+        return;
+      }
       evt.preventDefault();
       if (this.disabled) return;
       var parents = (0, _util.findComponentsUpward)(this, 'AtSubmenu');
