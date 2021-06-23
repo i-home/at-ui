@@ -5416,7 +5416,7 @@ exports.default = {
   inject: ['select'],
   props: {
     value: {
-      type: [String, Number],
+      type: [String, Number, Object],
       required: true
     },
     label: {
@@ -5524,7 +5524,7 @@ exports.default = {
   directives: { Clickoutside: _clickoutside2.default },
   props: {
     value: {
-      type: [String, Number, Array],
+      type: [String, Number, Object, Array],
       default: ''
     },
     trigger: {
