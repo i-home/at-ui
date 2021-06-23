@@ -23,7 +23,7 @@ export default {
   inject: ['select'],
   props: {
     value: {
-      type: [String, Number],
+      type: [String, Number, Object],
       required: true
     },
     label: {

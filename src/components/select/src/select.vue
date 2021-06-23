@@ -70,7 +70,7 @@ export default {
   directives: { Clickoutside },
   props: {
     value: {
-      type: [String, Number, Array],
+      type: [String, Number, Object, Array],
       default: ''
     },
     trigger: {
