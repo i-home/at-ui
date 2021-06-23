@@ -5580,7 +5580,7 @@ exports.default = {
       visible: false,
       options: [],
       optionInstances: [],
-      selectedSingle: "",
+      selectedSingle: undefined,
       selectedMultiple: [],
       focusIndex: 0,
       query: "",
@@ -5758,7 +5758,7 @@ exports.default = {
 
       var type = (0, _typeof3.default)(this.model);
 
-      if (type === "string" || type === "number") {
+      if (type === "string" || type === "number" || type === "object") {
         for (var i = 0; i < this.options.length; i++) {
           if (this.model === this.options[i].value || this.isEquals(this.model, this.options[i].value)) {
             this.selectedSingle = this.options[i].label;

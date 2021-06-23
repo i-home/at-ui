@@ -143,7 +143,7 @@ export default {
       visible: false,
       options: [],
       optionInstances: [],
-      selectedSingle: "",
+      selectedSingle: undefined,
       selectedMultiple: [],
       focusIndex: 0,
       query: "",
@@ -323,7 +323,7 @@ export default {
     updateSingleSelected(init = false) {
       const type = typeof this.model;
 
-      if (type === "string" || type === "number") {
+      if (type === "string" || type === "number" || type === "object") {
         for (let i = 0; i < this.options.length; i++) {
           if (
             this.model === this.options[i].value ||
