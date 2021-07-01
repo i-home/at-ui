@@ -15,7 +15,7 @@
       <div class="at-table__header" v-if="height">
         <table>
           <colgroup>
-            <col v-for="(column, index) in columnsData" :width="setCellWidth(column, index)">
+            <col v-for="(column, index) in columnsData" :width="setCellWidth(column, index)" :key="index">
           </colgroup>
           <thead class="at-table__thead" ref="header">
             <tr>
@@ -32,7 +32,7 @@
                 :style="{
                   cursor: column.sortType ? 'pointer' : 'text'
                 }"
-                @click="column.sortType && handleSort(index)">
+                @click="column.sortType && handleSort(index)" :key="index">
                 {{ column.title }}
                 <template v-if="column.sortType">
                   <div class="at-table__column-sorter"
@@ -56,7 +56,7 @@
       <div class="at-table__body" :style="bodyStyle">
         <table>
           <colgroup>
-            <col v-for="(column, index) in columnsData" :width="setCellWidth(column, index)">
+            <col v-for="(column, index) in columnsData" :width="setCellWidth(column, index)" :key="index">
           </colgroup>
           <thead class="at-table__thead" v-if="!height" ref="header">
             <tr>
@@ -73,7 +73,7 @@
                 :style="{
                   cursor: column.sortType ? 'pointer' : 'text'
                 }"
-                @click="column.sortType && handleSort(index)">
+                @click="column.sortType && handleSort(index)" :key="index">
                 {{ column.title }}
                 <template v-if="column.sortType">
                   <div class="at-table__column-sorter"
@@ -92,11 +92,11 @@
 
           <tbody class="at-table__tbody" v-if="sortData.length" ref="body">
             <template v-for="(item, index) in sortData">
-              <tr>
+              <tr :key="index">
                 <td v-if="optional" class="at-table__cell at-table__column-selection">
                   <at-checkbox v-model="objData[index].isChecked" @on-change="changeRowSelection"></at-checkbox>
                 </td>
-                <td v-for="(column, cindex) in columns" class="at-table__cell">
+                <td v-for="(column, cindex) in columns" class="at-table__cell" :key="cindex">
                   <template v-if="column.render">
                     <Cell :item="item" :column="column" :index="index" :render="column.render"></Cell>
                   </template>
@@ -208,10 +208,9 @@ export default {
   },
   data () {
     return {
-      objData: this.makeObjData(), // use for checkbox to select all
+      //objData: this.makeObjData(), // use for checkbox to select all
       sortData: [], // use for sort or paginate
       allData: [],
-      columnsData: this.makeColumns(),
       total: 0,
       bodyHeight: 0,
       pageCurSize: this.pageSize,
@@ -237,6 +236,32 @@ export default {
     }
   },
   computed: {
+    columnsData() {
+      const columns = deepCopy(this.columns)
+      columns.forEach((column, idx) => {
+        column._index = idx
+        column._sortType = 'normal'
+
+        if (column.sortType) {
+          column._sortType = column.sortType
+          column.sortType = column.sortType
+        }
+      })
+      return columns
+    },
+    objData() {
+      const rowData = {}
+
+      this.data.forEach((row, index) => {
+        const newRow = deepCopy(row)
+
+        newRow.isChecked = !!newRow.isChecked
+
+        rowData[index] = newRow
+      })
+
+      return rowData
+    },
     tableStyles () {
       const styles = {}
 
@@ -294,38 +319,12 @@ export default {
         this.bodyHeight = 0
       }
     },
-    makeColumns () {
-      const columns = deepCopy(this.columns)
-      columns.forEach((column, idx) => {
-        column._index = idx
-        column._sortType = 'normal'
-
-        if (column.sortType) {
-          column._sortType = column.sortType
-          column.sortType = column.sortType
-        }
-      })
-      return columns
-    },
     makeData () {
       const data = deepCopy(this.data)
       data.forEach((row, idx) => {
         row.index = idx
       })
       return data
-    },
-    makeObjData () {
-      const rowData = {}
-
-      this.data.forEach((row, index) => {
-        const newRow = deepCopy(row)
-
-        newRow.isChecked = !!newRow.isChecked
-
-        rowData[index] = newRow
-      })
-
-      return rowData
     },
     makeDataWithSortAndPage (pageNum) {
       let data = []

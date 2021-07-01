@@ -6514,10 +6514,8 @@ exports.default = {
   },
   data: function data() {
     return {
-      objData: this.makeObjData(),
       sortData: [],
       allData: [],
-      columnsData: this.makeColumns(),
       total: 0,
       bodyHeight: 0,
       pageCurSize: this.pageSize,
@@ -6544,6 +6542,32 @@ exports.default = {
     }
   },
   computed: {
+    columnsData: function columnsData() {
+      var columns = (0, _util.deepCopy)(this.columns);
+      columns.forEach(function (column, idx) {
+        column._index = idx;
+        column._sortType = 'normal';
+
+        if (column.sortType) {
+          column._sortType = column.sortType;
+          column.sortType = column.sortType;
+        }
+      });
+      return columns;
+    },
+    objData: function objData() {
+      var rowData = {};
+
+      this.data.forEach(function (row, index) {
+        var newRow = (0, _util.deepCopy)(row);
+
+        newRow.isChecked = !!newRow.isChecked;
+
+        rowData[index] = newRow;
+      });
+
+      return rowData;
+    },
     tableStyles: function tableStyles() {
       var styles = {};
 
@@ -6603,38 +6627,12 @@ exports.default = {
         this.bodyHeight = 0;
       }
     },
-    makeColumns: function makeColumns() {
-      var columns = (0, _util.deepCopy)(this.columns);
-      columns.forEach(function (column, idx) {
-        column._index = idx;
-        column._sortType = 'normal';
-
-        if (column.sortType) {
-          column._sortType = column.sortType;
-          column.sortType = column.sortType;
-        }
-      });
-      return columns;
-    },
     makeData: function makeData() {
       var data = (0, _util.deepCopy)(this.data);
       data.forEach(function (row, idx) {
         row.index = idx;
       });
       return data;
-    },
-    makeObjData: function makeObjData() {
-      var rowData = {};
-
-      this.data.forEach(function (row, index) {
-        var newRow = (0, _util.deepCopy)(row);
-
-        newRow.isChecked = !!newRow.isChecked;
-
-        rowData[index] = newRow;
-      });
-
-      return rowData;
     },
     makeDataWithSortAndPage: function makeDataWithSortAndPage(pageNum) {
       var data = [];
@@ -12800,6 +12798,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "at-table__header"
   }, [_c('table', [_c('colgroup', _vm._l((_vm.columnsData), function(column, index) {
     return _c('col', {
+      key: index,
       attrs: {
         "width": _vm.setCellWidth(column, index)
       }
@@ -12824,6 +12823,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })], 1) : _vm._e(), _vm._v(" "), _vm._l((_vm.columnsData), function(column, index) {
     return _c('th', {
+      key: index,
       staticClass: "at-table__cell at-table__column",
       class: column.className,
       style: ({
@@ -12866,6 +12866,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     style: (_vm.bodyStyle)
   }, [_c('table', [_c('colgroup', _vm._l((_vm.columnsData), function(column, index) {
     return _c('col', {
+      key: index,
       attrs: {
         "width": _vm.setCellWidth(column, index)
       }
@@ -12891,6 +12892,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })], 1) : _vm._e(), _vm._v(" "), _vm._l((_vm.columnsData), function(column, index) {
     return _c('th', {
+      key: index,
       staticClass: "at-table__cell at-table__column",
       class: column.className,
       style: ({
@@ -12932,7 +12934,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     ref: "body",
     staticClass: "at-table__tbody"
   }, [_vm._l((_vm.sortData), function(item, index) {
-    return [_c('tr', [(_vm.optional) ? _c('td', {
+    return [_c('tr', {
+      key: index
+    }, [(_vm.optional) ? _c('td', {
       staticClass: "at-table__cell at-table__column-selection"
     }, [_c('at-checkbox', {
       on: {
@@ -12947,6 +12951,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     })], 1) : _vm._e(), _vm._v(" "), _vm._l((_vm.columns), function(column, cindex) {
       return _c('td', {
+        key: cindex,
         staticClass: "at-table__cell"
       }, [(column.render) ? [_c('Cell', {
         attrs: {
