@@ -4109,11 +4109,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = {
-  name: 'AtMenuItemGroup',
+  name: "AtMenuItemGroup",
   props: {
     title: {
       type: String,
-      default: ''
+      default: ""
     }
   }
 };
@@ -12091,7 +12091,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "at-menu__item-group"
   }, [_c('li', {
     staticClass: "at-menu__item-group-title"
-  }, [_vm._v(_vm._s(_vm.title))]), _vm._v(" "), _c('ul', {
+  }, [_vm._t("title"), _vm._v("\n    " + _vm._s(_vm.title) + "\n  ")], 2), _vm._v(" "), _c('ul', {
     staticClass: "at-menu__item-group-list"
   }, [_vm._t("default")], 2)])
 },staticRenderFns: []}
