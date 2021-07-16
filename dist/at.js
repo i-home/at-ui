@@ -6779,7 +6779,7 @@ exports.default = {
       this.$nextTick(function () {
         var columnsWidth = {};
 
-        if (_this3.data.length) {
+        if (_this3.data.length && _this3.$refs.body && _this3.$refs.body.querySelectorAll('tr').length > 0) {
           var $td = _this3.$refs.body.querySelectorAll('tr')[0].querySelectorAll('td');
 
           for (var i = 0; i < $td.length; i++) {
