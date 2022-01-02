@@ -6942,6 +6942,7 @@ exports.default = {
     },
     value: function value(newValue) {
       this.activeKey = newValue;
+      this.setNavByIndex(this.activeIndex);
     }
   },
   computed: {

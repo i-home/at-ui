@@ -120,6 +120,7 @@ export default {
     },
     value (newValue) {
       this.activeKey = newValue;
+      this.setNavByIndex(this.activeIndex);
     }
   },
   computed: {
