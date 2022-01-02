@@ -6939,6 +6939,9 @@ exports.default = {
       this.$nextTick(function () {
         _this.scrollToActiveTab();
       });
+    },
+    value: function value(newValue) {
+      this.activeKey = newValue;
     }
   },
   computed: {
